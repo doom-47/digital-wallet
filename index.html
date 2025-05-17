@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wallet App</title>
+</head>
+<body>
+  <h1>Get Profile</h1>
+  <button onclick="getProfile()">Get Profile</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    async function getProfile() {
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Mjg0YjYxNTQ2Y2Y3OTA2N2VjNGFjMiIsImlhdCI6MTc0NzUwMzk4MiwiZXhwIjoxNzQ3NTA3NTgyfQ.eNVigGXyzmSf957YBnAasjzJBy3gurRvErVA_MVkHUg";
+
+      try {
+        const response = await fetch('http://localhost:3000/api/users/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        console.error('Fetch error:', error.message);
+        document.getElementById('output').textContent = `Error: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
